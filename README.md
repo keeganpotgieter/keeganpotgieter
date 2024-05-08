@@ -2,16 +2,17 @@
 
 # 👋 Hi, I'm Keegan
 
-<a href="https://www.linkedin.com/in/keeganpotgieter">
+<a href="https://www.linkedin.com/in/keeganpotgieter" target="_blank">
 <img draggable="false" alt="Globe" width="20%" src="assets/globe.gif" style="" ></img>
 </a>
 
-<a href="https://necta.app">
+<a href="https://necta.app" target="_blank">
 <img draggable="false" alt="Globe" width="15%" src="assets/moon.gif" style=""></img>
 </a>
 
 ## 🛠 Technologies
 
+&nbsp;
 <img src="https://img.shields.io/badge/JavaScript-282C34?logo=javascript&logoColor=F7DF1E" alt="JavaScript logo" title="JavaScript" height="20" />
 &nbsp;
 <img src="https://img.shields.io/badge/TypeScript-282C34?logo=typescript&logoColor=3178C6" alt="TypeScript logo" title="TypeScript" height="20" />
