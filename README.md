@@ -1,3 +1,5 @@
+<img draggable="false" src="./assets/banner.webp" style=" width: 100%; translate: 0px -25%; top: 0; left: 0; height: fit-content; position: relative;" alt="Banner" />
+
 # 👋 Hi, I'm Keegan
 
 <a href="https://www.linkedin.com/in/keeganpotgieter">
