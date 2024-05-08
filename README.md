@@ -1,19 +1,15 @@
-<div align="center" style="padding: 0px; position: relative; background-color: #030512">
-    <img draggable="false" src="./assets/banner.webp" style=" width: 100%; translate: 0px -25%; top: 0; left: 0; height: fit-content; position: relative;" alt="Banner" />
-    <div style="font-size: 5vw; padding-bottom: 24px; position: absolute; top: 20%; left: 50%; ; translate: -50% 0%">👋 Hi, I'm Keegan</div>
-    <img draggable="false" alt="Globe" width="20%" src="assets/globe.gif" style="position: absolute; top: 40%; left: 50%; translate: -50% 0%" ></img>
-    <a href="https://www.linkedin.com/in/keeganpotgieter"><img draggable="false" alt="Globe" width="15%" src="assets/moon.gif" style="position: absolute; top: 60%; left: 20%;" ></img></a>
-    <a href="https://necta.app"><img draggable="false" alt="Globe" width="10%" src="assets/venus.webp" style="position: absolute; top: 70%; right: 5%; rotate: 66deg;" /></a>
-    <div style="display: flex; flex-direction: column; color: #ffffff"></div>
-</div>
-
 # 👋 Hi, I'm Keegan
+
+<a href="https://www.linkedin.com/in/keeganpotgieter">
+<img draggable="false" alt="Globe" width="20%" src="assets/globe.gif" style="" ></img>
+</a>
+
+<a href="https://necta.app">
+<img draggable="false" alt="Globe" width="15%" src="assets/moon.gif" style=""></img>
+</a>
 
 ## 🛠 Technologies
 
-<a name="learning-now"></a>
-
-&nbsp;
 <img src="https://img.shields.io/badge/JavaScript-282C34?logo=javascript&logoColor=F7DF1E" alt="JavaScript logo" title="JavaScript" height="20" />
 &nbsp;
 <img src="https://img.shields.io/badge/TypeScript-282C34?logo=typescript&logoColor=3178C6" alt="TypeScript logo" title="TypeScript" height="20" />
