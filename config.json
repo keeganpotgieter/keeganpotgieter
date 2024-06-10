@@ -1,0 +1,35 @@
+{
+  "bioUrl": "https://raw.githubusercontent.com/keeganpotgieter/terminal-website/main/src/data/bio.dat",
+  "resume": "https://drive.google.com/file/d/1pw7WpxEP9Q7GfkjDZIWHnNVSGnA-h_NO/view?usp=sharing",
+  "portfolio": "https://raw.githubusercontent.com/kickthevidit/terminal-website/main/src/data/portfolio.html",
+  "projects": "https://raw.githubusercontent.com/kickthevidit/terminal-website/main/src/data/projects.html",
+  "experience": "https://raw.githubusercontent.com/kickthevidit/terminal-website/main/src/data/experience.html",
+  "mortal-kombat": "https://raw.githubusercontent.com/kickthevidit/terminal-website/main/src/data/mortal_kombat.html",
+  "social": {
+    "github": "keeganpotgieter",
+    "linkedin": "keeganpotgieter"
+  },
+  "theme": {
+    "name": "Elementary",
+    "black": "#303030",
+    "red": "#e1321a",
+    "green": "#6ab017",
+    "yellow": "#ffc005",
+    "blue": "#004f9e",
+    "purple": "#ec0048",
+    "cyan": "#2aa7e7",
+    "white": "#f2f2f2",
+    "brightBlack": "#5d5d5d",
+    "brightRed": "#ff361e",
+    "brightGreen": "#7bc91f",
+    "brightYellow": "#ffd00a",
+    "brightBlue": "#0071ff",
+    "brightPurple": "#ff1d62",
+    "brightCyan": "#4bb8fd",
+    "brightWhite": "#a020f0",
+    "foreground": "#f2f2f2",
+    "background": "#101010",
+    "cursorColor": "#f2f2f2"
+  },
+  "border": true
+}
