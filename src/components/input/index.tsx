@@ -17,17 +17,63 @@ const trimZeroWidthSpace = (str: string, extended: boolean = false) => {
   return parsedString.trim();
 };
 
-const setCaretToEnd = (element: HTMLDivElement) => {
+const findFirstDiffIndex = (str1: string, str2: string | undefined) => {
+  if (!str2) return -1;
+
+  const maxLength = Math.max(str1.length, str2.length);
+  for (let i = 0; i < maxLength; i++) {
+    if (str1[i] !== str2[i]) {
+      return i;
+    }
+  }
+  return -1; // If the strings are identical
+};
+
+const setCaretToEnd = (
+  element: HTMLDivElement,
+  prevValue: string | undefined = undefined,
+) => {
   const inputSpan = element.querySelector<HTMLSpanElement>('#input-value');
   if (!inputSpan || inputSpan.childNodes[0] === undefined) return;
 
+  const text = inputSpan.textContent ?? '';
+
+  const diffIndex = findFirstDiffIndex(inputSpan.textContent || '', prevValue);
+
+  const _diffOffset = text.length < (prevValue?.length ?? 0) ? 0 : 1;
+  const offset =
+    diffIndex >= 0
+      ? diffIndex + _diffOffset
+      : inputSpan.textContent?.length || 0;
+
+  console.log({
+    l: inputSpan.textContent?.length,
+    ccp: getCursorPosition(element),
+    prevValue,
+    diff: findFirstDiffIndex(inputSpan.textContent || '', prevValue || ''),
+    offset,
+  });
+
   const range = document.createRange();
   const sel = window.getSelection();
-  range.setStart(inputSpan.childNodes[0], inputSpan.textContent?.length || 0);
+  range.setStart(inputSpan.childNodes[0], offset);
   range.collapse(true);
   sel?.removeAllRanges();
   sel?.addRange(range);
   element.focus();
+};
+
+const getCursorPosition = (element: HTMLDivElement) => {
+  const selection = window.getSelection();
+  if (selection && (selection.rangeCount ?? -1 > 0)) {
+    const range = selection.getRangeAt(0);
+    const preCaretRange = range.cloneRange();
+    preCaretRange.selectNodeContents(element);
+    preCaretRange.setEnd(range.endContainer, range.endOffset);
+    const cursorPosition = preCaretRange.toString().length;
+    return cursorPosition;
+  }
+  return 0;
 };
 
 export const Input = ({
@@ -42,6 +88,7 @@ export const Input = ({
   const [suggestion, setSuggestion] = React.useState('');
   const [lastSuggestionIndex, setLastSuggestionIndex] =
     React.useState<number>(1);
+  const prevValue = React.useRef<string | undefined>(undefined);
   const {
     setCommand,
     history,
@@ -62,7 +109,7 @@ export const Input = ({
       inputRef.current.innerHTML = `
         <span id="input-value">${val}</span><span id="input-suggestion" style="opacity: 0.2">${sugg}</span>
       `;
-      setCaretToEnd(inputRef.current);
+      setCaretToEnd(inputRef.current, prevValue.current);
     }
   };
 
@@ -75,42 +122,37 @@ export const Input = ({
       if (inputRef.current) {
         updateContent(BLANK, suggestion);
         setSuggestion('');
-        setCaretToEnd(inputRef.current);
       }
     } else {
       setValue(value);
       if (inputRef.current) {
         updateContent(value, suggestion);
         setSuggestion(suggestion);
-        setCaretToEnd(inputRef.current);
       }
     }
+
+    prevValue.current = value;
   };
 
   const onSubmit = async (event: React.KeyboardEvent<HTMLDivElement>) => {
-    if (event.key === 'l' && event.ctrlKey) {
+    const key = event.key;
+
+    if (key === 'Tab') {
       event.preventDefault();
-      setLastSuggestionIndex(0);
+      prevValue.current = undefined;
 
-      clearHistory();
-      return;
-    }
-
-    if (event.key === 'Tab') {
-      event.preventDefault();
-
-      handleTabCompletion(
+      await handleTabCompletion(
         value,
         handleSetValue,
         lastSuggestionIndex,
         setLastCommandIndex,
       );
       setLastSuggestionIndex(0);
-      return;
     }
 
-    if (event.key === 'Enter' || event.code === '13') {
+    if (key === 'Enter' || event.code === '13') {
       event.preventDefault();
+      prevValue.current = undefined;
 
       setLastCommandIndex(0);
 
@@ -118,15 +160,15 @@ export const Input = ({
 
       handleSetValue(undefined);
       setLastSuggestionIndex(0);
-      return;
     }
 
     const commands: string[] = history
       .map(({ command }) => command)
       .filter((value: string) => value);
 
-    if (event.key === 'ArrowUp') {
+    if (key === 'ArrowUp') {
       event.preventDefault();
+      prevValue.current = undefined;
 
       if (!commands.length) {
         return;
@@ -138,14 +180,13 @@ export const Input = ({
         setLastCommandIndex(index);
         handleSetValue(commands[commands.length - index]);
       }
-      return;
     }
 
-    if (event.key === 'ArrowDown') {
+    if (key === 'ArrowDown') {
       event.preventDefault();
+      prevValue.current = undefined;
 
       if (!commands.length) {
-        return;
       }
 
       const index: number = lastCommandIndex - 1;
@@ -157,19 +198,18 @@ export const Input = ({
         setLastCommandIndex(0);
         handleSetValue(undefined);
       }
-      return;
     }
 
-    if (event.key === 'ArrowRight' && suggestion) {
+    if (key === 'ArrowRight' && suggestion) {
       handleSetValue(value + suggestion);
+      prevValue.current = undefined;
       setLastSuggestionIndex(0);
-      return;
     }
   };
 
-  const handleChange = (event: React.ChangeEvent<HTMLDivElement>) => {
+  const handleChange = async (event: React.ChangeEvent<HTMLDivElement>) => {
     const _text = trimZeroWidthSpace(
-      event.target.textContent || BLANK_VALUE,
+      event.currentTarget.textContent || BLANK_VALUE,
       false,
     );
     let text = '';
@@ -192,15 +232,24 @@ export const Input = ({
     }
 
     const _suggestion =
-      getCommandSuggestion(text, lastSuggestionIndex, setLastSuggestionIndex) ??
-      '';
+      (await getCommandSuggestion(
+        text,
+        lastSuggestionIndex,
+        setLastSuggestionIndex,
+      )) ?? '';
     const suggestion = text.length > 0 ? _suggestion : '';
     handleSetValue(text, suggestion);
+
+    prevValue.current = text;
+  };
+
+  const onFocus = () => {
+    if (inputRef.current) setCaretToEnd(inputRef.current, undefined);
   };
 
   return (
-    <div className='_flex relative w-full max-w-full flex-row'>
-      <label htmlFor='prompt' className='_h-fit float-left flex-shrink'>
+    <div className='relative w-full max-w-full flex-row'>
+      <label htmlFor='prompt' className='float-left flex-shrink'>
         <Username />
       </label>
 
@@ -215,9 +264,10 @@ export const Input = ({
           backgroundColor: theme.background,
           color: commandExists(value) || value === '' ? theme.green : theme.red,
         }}
-        onInput={handleChange}
-        autoFocus
         onKeyDown={onSubmit}
+        autoFocus
+        onFocus={onFocus}
+        onInput={handleChange}
         autoCorrect='off'
         autoCapitalize='off'
       ></div>

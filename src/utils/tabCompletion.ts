@@ -14,12 +14,12 @@ const hasArguments = (fn: any): fn is BinFunctionWithArguments => {
 
 const commandCache: { [key: string]: string[] } = {};
 
-export const getCommandSuggestion = (
+export const getCommandSuggestion = async (
   command: string,
   previousIndex: number = 0,
   setPreviousIndex: (value: number) => void,
-): string | undefined => {
-  const completion = handleAutocomplete(
+): Promise<string | undefined> => {
+  const completion = await handleAutocomplete(
     command,
     previousIndex,
     setPreviousIndex,
@@ -45,13 +45,13 @@ export const getCommandCompletion = (command: string): string | undefined => {
   return commands[0];
 };
 
-export const handleTabCompletion = (
+export const handleTabCompletion = async (
   command: string,
   setCommand: (value: string | undefined) => void,
   previousIndex: number = 0,
   setPreviousIndex: (value: number) => void,
 ) => {
-  const nextSuggestion = handleAutocomplete(
+  const nextSuggestion = await handleAutocomplete(
     command,
     previousIndex,
     setPreviousIndex,
@@ -63,11 +63,11 @@ export const handleTabCompletion = (
 
 //
 // Split the command and arguments and validate them
-export const handleAutocomplete = (
+export const handleAutocomplete = async (
   input: string,
   previousIndex: number = 0,
   setPreviousIndex: (value: number) => void,
-): string | undefined => {
+): Promise<string | undefined> => {
   const parts = input.trim().split(/\s+/);
   const [cmd, ...args] = parts;
 

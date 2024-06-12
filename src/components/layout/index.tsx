@@ -1,7 +1,7 @@
-import { useTheme } from '../../utils/themeProvider';
 import { EvervaultCard } from '../ui/extended/vault';
 import WindowDisplay from '../ui/extended/window';
 import React from 'react';
+import packageJson from '~/package.json';
 
 interface Props {
   children: React.ReactNode;
@@ -15,7 +15,10 @@ const Layout: React.FC<Props> = ({ children, onClick }) => {
       onClick={onClick}
     >
       <EvervaultCard>
-        <WindowDisplay className='z-10 h-full w-full max-w-4xl sm:max-h-[80%]'>
+        <WindowDisplay
+          searchBar={`keeganpotgieter — zsh — ${packageJson.version}`}
+          className='z-10 h-full w-full max-w-4xl sm:max-h-[80%]'
+        >
           {children}
         </WindowDisplay>
       </EvervaultCard>

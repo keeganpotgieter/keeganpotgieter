@@ -17,7 +17,7 @@ export const super_secret = async (): Promise<string> => {
 super_secret.description = 'Shhhh...';
 
 export const resume = async (): Promise<string> => {
-  window.open(`https://TODO`);
+  window.open(`./assets/Resume_01_24.pdf`, '_blank');
 
   return 'Opening resume...';
 };

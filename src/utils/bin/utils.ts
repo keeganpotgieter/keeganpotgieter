@@ -36,14 +36,12 @@ const formatCommandDescription = (
   const aliasList = aliases.map((alias) => `'${alias}'`).join(' / ');
   const args = callback.length > 0 ? '[args]' : '';
   const description = callback.description || 'No description available';
-  return `
-    <tr>
+  return `<tr>
       <td>${command}</td>
       <td>${aliasList}</td>
-      <td>${args}</td>
-      <td>${description}</td>
-    </tr>
-  `;
+      <td class="max-sm:hidden">${args}</td>
+      <td class="text-right">${description}</td>
+    </tr>`;
 };
 
 export const help = async (): Promise<string> => {
@@ -55,24 +53,13 @@ export const help = async (): Promise<string> => {
     },
   );
 
-  const output = `<style>
-    table {
-      width: 100%;
-    }
-    th {
-      text-align: left;
-    }
-    th, td {
-      padding: 8px;
-    }
-  </style>
-  <table>
-    <thead>
+  const output = `<table class="w-full">
+    <thead class="text-left px-2">
       <tr>
         <th>Command</th>
         <th>Aliases</th>
-        <th>Args</th>
-        <th>Description</th>
+        <th class="max-sm:hidden">Args</th>
+        <th class="text-right">Description</th>
       </tr>
     </thead>
     <tbody>
@@ -82,8 +69,7 @@ export const help = async (): Promise<string> => {
   <p>
 [tab] trigger completion.<br/>
 [ctrl+l] clear terminal.<br/>
-  </p>
-  `;
+  </p>`;
 
   return output;
 };
@@ -97,7 +83,7 @@ export const echo = async (args: string[]): Promise<string> => {
 
 echo.description = 'Print a message';
 
-export const date = async (args: string[]): Promise<string> => {
+export const date = async (): Promise<string> => {
   return new Date().toString();
 };
 
@@ -129,7 +115,7 @@ export const sudo = async (args?: string[]): Promise<string> => {
 sudo.description = 'Sudo';
 
 export const banner = (): string => {
-  return `Welcome!
+  return `<h2 class="text-xl p-0">Welcome!</h2>
 
 Example Commands:
   - Resume: 'resume' or 'r'
@@ -142,6 +128,7 @@ Contacts:
   - LinkedIn: 'linkedin'
 
 Type 'help' to see a list of available commands.
+<div>
 `;
 };
 

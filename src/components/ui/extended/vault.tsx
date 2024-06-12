@@ -38,7 +38,7 @@ export const EvervaultCard = ({
   return (
     <div
       className={cn(
-        'group/card relative flex h-full w-full items-center justify-center',
+        'group/card relative flex h-full w-full items-center justify-center sm:p-2',
         className,
       )}
       onMouseMove={onMouseMove}
