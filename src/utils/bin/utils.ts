@@ -119,8 +119,6 @@ export const banner = (): string => {
 
 Example Commands:
   - Resume: 'resume' or 'r'
-  - Projects: 'projects' or 'p'
-  - Experiences: 'experience' or 'e'
   - Github: 'github'
 
 Contacts:

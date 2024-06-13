@@ -34,11 +34,11 @@ const setCaretToEnd = (
   prevValue: string | undefined = undefined,
 ) => {
   const inputSpan = element.querySelector<HTMLSpanElement>('#input-value');
-  if (!inputSpan || inputSpan.childNodes[0] === undefined) return;
+  if (inputSpan?.childNodes[0] === undefined) return;
 
   const text = inputSpan.textContent ?? '';
 
-  const diffIndex = findFirstDiffIndex(inputSpan.textContent || '', prevValue);
+  const diffIndex = findFirstDiffIndex(inputSpan.textContent ?? '', prevValue);
 
   const _diffOffset = text.length < (prevValue?.length ?? 0) ? 0 : 1;
   const offset =
@@ -137,6 +137,16 @@ export const Input = ({
   const onSubmit = async (event: React.KeyboardEvent<HTMLDivElement>) => {
     const key = event.key;
 
+    if (event.key === 'l' && event.ctrlKey) {
+      event.preventDefault();
+      prevValue.current = undefined;
+
+      setLastSuggestionIndex(0);
+
+      clearHistory();
+      return;
+    }
+
     if (key === 'Tab') {
       event.preventDefault();
       prevValue.current = undefined;
@@ -186,9 +196,6 @@ export const Input = ({
       event.preventDefault();
       prevValue.current = undefined;
 
-      if (!commands.length) {
-      }
-
       const index: number = lastCommandIndex - 1;
 
       if (index > 0) {
@@ -209,7 +216,7 @@ export const Input = ({
 
   const handleChange = async (event: React.ChangeEvent<HTMLDivElement>) => {
     const _text = trimZeroWidthSpace(
-      event.currentTarget.textContent || BLANK_VALUE,
+      event.currentTarget.textContent ?? BLANK_VALUE,
       false,
     );
     let text = '';
@@ -222,8 +229,7 @@ export const Input = ({
       : _text;
 
     if (
-      inputSpan &&
-      inputSpan.textContent !== undefined &&
+      inputSpan?.textContent !== undefined &&
       inputSpan.textContent !== null
     ) {
       text = trimZeroWidthSpace(inputSpan.textContent, true);
