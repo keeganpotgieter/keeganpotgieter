@@ -25,8 +25,7 @@ const App: React.FC<CustomAppProps> = ({ Component, pageProps }) => {
         <Head>
           <meta
             name='viewport'
-            content='initial-scale=1.0, width=device-width'
-            key='viewport'
+            content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'
           />
         </Head>
         <Layout onClick={onClickAnywhere}>

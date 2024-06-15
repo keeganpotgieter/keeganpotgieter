@@ -56,7 +56,7 @@ export const useShell = () => {
   return context;
 };
 
-const normaliseString = (str: string) => str.replace(/\u00A0/g, ' ');
+export const normaliseString = (str: string) => str.replace(/\u00A0/g, ' ');
 
 export const ShellProvider: React.FC<ShellProviderProps> = ({ children }) => {
   const [init, setInit] = React.useState(true);

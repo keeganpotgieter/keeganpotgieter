@@ -66,9 +66,12 @@ export const help = async (): Promise<string> => {
       ${commandDescriptions.join('')}
     </tbody>
   </table>
-  <p>
+  <p class="hidden sm:block">
 [tab] trigger completion.<br/>
 [ctrl+l] clear terminal.<br/>
+  </p>
+  <p class="block sm:hidden">
+[touch] trigger completion.<br/>
   </p>`;
 
   return output;
@@ -125,8 +128,11 @@ Contacts:
   - Email me: 'email'
   - LinkedIn: 'linkedin'
 
-Type 'help' to see a list of available commands.
-<div>
+<p>Type 'help' to see a list of available commands.</p>
+
+<div class='border border-border/50 bg-border/20 rounded-md px-1 py-[0px] h-fit w-fit'>
+<p class='block sm:hidden gradient-text'>For more fun, visit on a bigger device!</p>
+</div>
 `;
 };
 

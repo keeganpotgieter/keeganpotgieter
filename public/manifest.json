@@ -1,8 +1,8 @@
 {
   "name": "Keegan Potgieter",
   "short_name": "Keegan",
-  "theme_color": "#D79921",
-  "background_color": "#262626",
+  "theme_color": "#000000",
+  "background_color": "#000000",
   "display": "fullscreen",
   "orientation": "portrait",
   "scope": "/",

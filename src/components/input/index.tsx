@@ -1,5 +1,5 @@
 import { commandExists } from '../../utils/commandExists';
-import { useShell } from '../../utils/shellProvider';
+import { normaliseString, useShell } from '../../utils/shellProvider';
 import {
   getCommandSuggestion,
   handleTabCompletion,
@@ -10,6 +10,14 @@ import React from 'react';
 
 const BLANK = `\u200B`;
 const BLANK_VALUE = '';
+
+const convertToHex = (str: string) => {
+  if (!str) return;
+  return str
+    .split('')
+    .map((char) => char.charCodeAt(0).toString(16))
+    .join(' ');
+};
 
 const trimZeroWidthSpace = (str: string, extended: boolean = false) => {
   const parsedString = str.replace(/[\u200B-\u200D\uFEFF]/g, '');
@@ -22,7 +30,18 @@ const findFirstDiffIndex = (str1: string, str2: string | undefined) => {
 
   const maxLength = Math.max(str1.length, str2.length);
   for (let i = 0; i < maxLength; i++) {
-    if (str1[i] !== str2[i]) {
+    // console.log(
+    //   str1[i],
+    //   str1[i]?.charCodeAt(0),
+    //   str2[i],
+    //   str2[i]?.charCodeAt(0),
+    //   str1[i] !== str2[i],
+    //   convertToHex(str1[i]),
+    //   convertToHex(str2[i]),
+    //   normaliseString(str1[i] ?? '') === normaliseString(str2[i] ?? ''),
+    // );
+    // if (str1[i] !== str2[i]) {
+    if (normaliseString(str1[i] ?? '') !== normaliseString(str2[i] ?? '')) {
       return i;
     }
   }
@@ -46,13 +65,7 @@ const setCaretToEnd = (
       ? diffIndex + _diffOffset
       : inputSpan.textContent?.length || 0;
 
-  console.log({
-    l: inputSpan.textContent?.length,
-    ccp: getCursorPosition(element),
-    prevValue,
-    diff: findFirstDiffIndex(inputSpan.textContent || '', prevValue || ''),
-    offset,
-  });
+  // console.log({ text, prevValue, diffIndex, _diffOffset, offset });
 
   const range = document.createRange();
   const sel = window.getSelection();
@@ -117,21 +130,30 @@ export const Input = ({
     value: string | undefined,
     suggestion: string = '',
   ) => {
+    // console.log('handleSetValue', { value, suggestion });
     if (!value || value.length === 0) {
       setValue(BLANK_VALUE);
       if (inputRef.current) {
         updateContent(BLANK, suggestion);
         setSuggestion('');
       }
+      prevValue.current = undefined;
     } else {
       setValue(value);
       if (inputRef.current) {
         updateContent(value, suggestion);
         setSuggestion(suggestion);
       }
+      prevValue.current = normaliseString(value);
     }
 
-    prevValue.current = value;
+    // console.log('convertToHex', convertToHex(value ?? ''));
+    // console.log(
+    //   'norm convertToHex',
+    //   convertToHex(normaliseString(value ?? '')),
+    // );
+
+    // prevValue.current = value;
   };
 
   const onSubmit = async (event: React.KeyboardEvent<HTMLDivElement>) => {
@@ -208,8 +230,8 @@ export const Input = ({
     }
 
     if (key === 'ArrowRight' && suggestion) {
-      handleSetValue(value + suggestion);
       prevValue.current = undefined;
+      handleSetValue(value + suggestion);
       setLastSuggestionIndex(0);
     }
   };
@@ -251,6 +273,12 @@ export const Input = ({
 
   const onFocus = () => {
     if (inputRef.current) setCaretToEnd(inputRef.current, undefined);
+
+    if (suggestion) {
+      prevValue.current = undefined;
+      handleSetValue(value + suggestion);
+      setLastSuggestionIndex(0);
+    }
   };
 
   return (
@@ -273,6 +301,7 @@ export const Input = ({
         onKeyDown={onSubmit}
         autoFocus
         onFocus={onFocus}
+        onTouchStart={onFocus}
         onInput={handleChange}
         autoCorrect='off'
         autoCapitalize='off'

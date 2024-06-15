@@ -78,7 +78,7 @@ const WindowDisplay = ({
     >
       <div
         className={cn(
-          'bg-gray-950 border-border/20 hidden h-12 w-full items-center justify-between space-x-1.5 rounded-t-lg border-2 p-2 px-4 sm:flex',
+          'hidden h-12 w-full items-center justify-between space-x-1.5 rounded-t-lg border-0 border-border/20 bg-gray-950 p-2 px-4 sm:flex sm:border-2',
           { 'sm:rounded-lg': minify },
         )}
       >
@@ -91,15 +91,15 @@ const WindowDisplay = ({
           >
             <span
               onClick={handleClose}
-              className='dark:border-red-400 bg-red-400 hover:bg-red-500 h-3 w-3 cursor-pointer rounded-full border border-transparent'
+              className='dark:border-red-400 h-3 w-3 cursor-pointer rounded-full border border-transparent bg-red-400 hover:bg-red-500'
             ></span>
             <span
               onClick={handleMinify}
-              className='dark:border-yellow-400 bg-yellow-400 hover:bg-yellow-500 h-3 w-3 cursor-pointer rounded-full border border-transparent'
+              className='dark:border-yellow-400 h-3 w-3 cursor-pointer rounded-full border border-transparent bg-yellow-400 hover:bg-yellow-500'
             ></span>
             <span
               className={cn(
-                'dark:border-green-400 bg-green-400 hover:bg-green-500 h-3 w-3 cursor-pointer rounded-full border border-transparent',
+                'dark:border-green-400 h-3 w-3 cursor-pointer rounded-full border border-transparent bg-green-400 hover:bg-green-500',
               )}
             ></span>
           </div>
@@ -108,7 +108,7 @@ const WindowDisplay = ({
           {searchBar && (
             <div
               className={cn(
-                'border-border/20 text-muted-foreground h-full w-full rounded-md border p-1 text-center text-xs',
+                'h-full w-full rounded-md border-0 border-border/20 p-1 text-center text-xs text-muted-foreground sm:border',
                 { 'sm:border-none': minify },
               )}
             >
@@ -116,7 +116,7 @@ const WindowDisplay = ({
             </div>
           )}
         </div>
-        <div className='text-border/20 group flex flex-1 items-center justify-end p-1'>
+        <div className='group flex flex-1 items-center justify-end p-1 text-border/20'>
           <PanelBottomOpenIcon
             onClick={handleMinify}
             className={cn(
@@ -130,7 +130,7 @@ const WindowDisplay = ({
       </div>
       <div
         className={cn(
-          'border-border/20 flex h-full min-w-full max-w-2xl flex-1 flex-col overflow-clip rounded-b-lg border-2 border-t-0',
+          'flex h-full min-w-full max-w-2xl flex-1 flex-col overflow-clip border-t-0 border-none border-border/20 sm:rounded-b-lg sm:border-2',
           { 'sm:hidden': minify },
         )}
         style={{

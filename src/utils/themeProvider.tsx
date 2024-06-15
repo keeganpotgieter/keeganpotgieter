@@ -40,7 +40,14 @@ export const useTheme = () => {
 const themeCache: { [key: string]: Theme } = {};
 
 export const ThemeProvider: React.FC<Props> = ({ children }) => {
-  const [theme, setTheme] = useState<Theme>(config.theme);
+  const [theme, _setTheme] = useState<Theme>(config.theme);
+
+  const setTheme = (theme: Theme) => {
+    _setTheme(theme);
+    document
+      .querySelector("meta[name='theme-color']")
+      ?.setAttribute('content', theme.background);
+  };
 
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme');
@@ -58,6 +65,10 @@ export const ThemeProvider: React.FC<Props> = ({ children }) => {
         themeCache[savedTheme.toLowerCase()] = selectedTheme;
         setTheme(selectedTheme);
       }
+    } else {
+      document
+        .querySelector("meta[name='theme-color']")
+        ?.setAttribute('content', theme.background);
     }
   }, []);
 
