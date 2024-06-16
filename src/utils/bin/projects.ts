@@ -1,9 +1,9 @@
-import { getProjects } from '../../api';
+import { html } from '@/lib/utils';
+
+const content = html``;
 
 export const projects = async (): Promise<string> => {
-  const bio = await getProjects();
-
-  return bio;
+  return content;
 };
 export const p = projects;
 
