@@ -18,20 +18,25 @@ export const EvervaultCard = ({
   const [randomString, setRandomString] = useState('');
 
   useEffect(() => {
-    const { innerWidth: width, innerHeight: height } = window;
-
-    let str = generateRandomString((width * height) / 100);
+    const str = generateRandomString(2000);
     setRandomString(str);
   }, []);
 
-  function onMouseMove({ currentTarget, clientX, clientY }: any) {
+  function onMouseMove({
+    currentTarget,
+    clientX,
+    clientY,
+  }: {
+    currentTarget: HTMLDivElement;
+    clientX: number;
+    clientY: number;
+  }) {
     let { left, top } = currentTarget.getBoundingClientRect();
-    const { innerWidth: width, innerHeight: height } = window;
 
     mouseX.set(clientX - left);
     mouseY.set(clientY - top);
 
-    const str = generateRandomString((width * height) / 100);
+    let str = generateRandomString(2000);
     setRandomString(str);
   }
 
@@ -62,33 +67,36 @@ export function CardPattern({
   mouseY: MotionValue<number>;
   randomString: string;
 }) {
-  let maskImage = useMotionTemplate`radial-gradient(250px at ${mouseX}px ${mouseY}px, white, transparent)`;
+  const maskImage = useMotionTemplate`radial-gradient(250px at ${mouseX}px ${mouseY}px, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.6), rgba(0, 0, 0, 0.2), transparent)`;
   const xVel = Math.abs(mouseX.getVelocity());
   const yVel = Math.abs(mouseY.getVelocity());
   const avgVel = (xVel + yVel) / 2;
   const opacity =
-    Math.round(100 * Math.max(Math.min(avgVel / 2000, 0.5), 0.1)) / 100;
+    Math.round(100 * Math.max(Math.min(avgVel / 2000, 0.8), 0.4)) / 100;
 
-  let style = {
+  const style = {
     maskImage,
     WebkitMaskImage: maskImage,
-    opacity: opacity,
   };
 
   return (
     <div className='pointer-events-none z-0'>
-      {/* <div className='absolute inset-0 rounded-2xl [mask-image:linear-gradient(white,transparent)] group-hover/card:opacity-0'></div> */}
       <motion.div
-        className='from-green-500 to-blue-700 absolute inset-0 bg-gradient-to-r opacity-0 backdrop-blur-xl transition duration-500 group-hover/card:opacity-100'
-        style={style}
-      />
-      <motion.div
-        className='absolute inset-0 opacity-0 mix-blend-overlay group-hover/card:opacity-100'
+        className='absolute inset-0 bg-gradient-to-r from-green-500/50 to-blue-700/50 backdrop-blur-2xl transition duration-500 group-hover/card:opacity-100'
         style={style}
       >
-        <p className='text-white absolute inset-x-0 h-full w-full whitespace-pre-wrap break-words font-mono text-sm font-bold transition duration-500'>
-          {randomString}
-        </p>
+        <motion.div
+          className='absolute inset-0 h-fit w-fit translate-y-1/2 mix-blend-overlay group-hover/card:opacity-100'
+          style={{
+            opacity,
+            x: mouseX,
+            y: mouseY,
+          }}
+        >
+          <p className='absolute inset-x-0 h-[30rem] w-[30rem] -translate-x-1/2 -translate-y-1/2 whitespace-pre-wrap break-words font-mono text-sm font-bold text-white transition duration-500'>
+            {randomString}
+          </p>
+        </motion.div>
       </motion.div>
     </div>
   );

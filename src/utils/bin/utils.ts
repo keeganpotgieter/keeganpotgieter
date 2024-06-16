@@ -130,8 +130,8 @@ Contacts:
 
 <p>Type 'help' to see a list of available commands.</p>
 
-<div class='border border-border/50 bg-border/20 rounded-md px-1 py-[0px] h-fit w-fit'>
-<p class='block sm:hidden gradient-text'>For more fun, visit on a bigger device!</p>
+<div class='block sm:hidden border border-border/50 bg-border/10 rounded-md px-[2px] py-[1.5px] h-fit w-fit whitespace-normal bg-[conic-gradient(hsl(var(--secondary))_60deg,#22c55e_140deg,hsl(var(--primary))_200deg,hsl(var(--secondary))_340deg)]'>
+For more fun, visit on a bigger device!
 </div>
 `;
 };

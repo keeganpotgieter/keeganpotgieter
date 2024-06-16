@@ -1,9 +1,9 @@
-import { getBio } from '../../api';
+import { html } from '@/lib/utils';
+
+const content = html`# Hello there!`;
 
 export const about = async (): Promise<string> => {
-  const bio = await getBio();
-
-  return bio;
+  return content;
 };
 export const a = about;
 

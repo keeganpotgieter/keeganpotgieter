@@ -1,10 +1,4 @@
 {
-  "bioUrl": "https://raw.githubusercontent.com/keeganpotgieter/terminal-website/main/src/data/bio.dat",
-  "resume": "https://drive.google.com/file/d/1pw7WpxEP9Q7GfkjDZIWHnNVSGnA-h_NO/view?usp=sharing",
-  "portfolio": "https://raw.githubusercontent.com/kickthevidit/terminal-website/main/src/data/portfolio.html",
-  "projects": "https://raw.githubusercontent.com/kickthevidit/terminal-website/main/src/data/projects.html",
-  "experience": "https://raw.githubusercontent.com/kickthevidit/terminal-website/main/src/data/experience.html",
-  "mortal-kombat": "https://raw.githubusercontent.com/kickthevidit/terminal-website/main/src/data/mortal_kombat.html",
   "social": {
     "github": "keeganpotgieter",
     "linkedin": "keeganpotgieter"

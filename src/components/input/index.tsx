@@ -30,17 +30,6 @@ const findFirstDiffIndex = (str1: string, str2: string | undefined) => {
 
   const maxLength = Math.max(str1.length, str2.length);
   for (let i = 0; i < maxLength; i++) {
-    // console.log(
-    //   str1[i],
-    //   str1[i]?.charCodeAt(0),
-    //   str2[i],
-    //   str2[i]?.charCodeAt(0),
-    //   str1[i] !== str2[i],
-    //   convertToHex(str1[i]),
-    //   convertToHex(str2[i]),
-    //   normaliseString(str1[i] ?? '') === normaliseString(str2[i] ?? ''),
-    // );
-    // if (str1[i] !== str2[i]) {
     if (normaliseString(str1[i] ?? '') !== normaliseString(str2[i] ?? '')) {
       return i;
     }
@@ -65,8 +54,6 @@ const setCaretToEnd = (
       ? diffIndex + _diffOffset
       : inputSpan.textContent?.length || 0;
 
-  // console.log({ text, prevValue, diffIndex, _diffOffset, offset });
-
   const range = document.createRange();
   const sel = window.getSelection();
   range.setStart(inputSpan.childNodes[0], offset);
@@ -76,14 +63,28 @@ const setCaretToEnd = (
   element.focus();
 };
 
-const getCursorPosition = (element: HTMLDivElement) => {
+const getCaretPosition = (element: HTMLDivElement | null) => {
+  const inputSpan = element?.querySelector('#input-value');
   const selection = window.getSelection();
-  if (selection && (selection.rangeCount ?? -1 > 0)) {
+  if (element && selection && selection.rangeCount > 0) {
     const range = selection.getRangeAt(0);
     const preCaretRange = range.cloneRange();
-    preCaretRange.selectNodeContents(element);
-    preCaretRange.setEnd(range.endContainer, range.endOffset);
-    const cursorPosition = preCaretRange.toString().length;
+    let cursorPosition = 0;
+
+    if (
+      inputSpan &&
+      (range.startContainer === inputSpan ||
+        inputSpan.contains(range.startContainer))
+    ) {
+      preCaretRange.selectNodeContents(inputSpan);
+      preCaretRange.setEnd(range.endContainer, range.endOffset);
+      cursorPosition = normaliseString(preCaretRange.toString()).length;
+    } else {
+      preCaretRange.selectNodeContents(element);
+      preCaretRange.setEnd(range.endContainer, range.endOffset);
+      cursorPosition = normaliseString(preCaretRange.toString()).length;
+    }
+
     return cursorPosition;
   }
   return 0;
@@ -130,7 +131,6 @@ export const Input = ({
     value: string | undefined,
     suggestion: string = '',
   ) => {
-    // console.log('handleSetValue', { value, suggestion });
     if (!value || value.length === 0) {
       setValue(BLANK_VALUE);
       if (inputRef.current) {
@@ -146,14 +146,6 @@ export const Input = ({
       }
       prevValue.current = normaliseString(value);
     }
-
-    // console.log('convertToHex', convertToHex(value ?? ''));
-    // console.log(
-    //   'norm convertToHex',
-    //   convertToHex(normaliseString(value ?? '')),
-    // );
-
-    // prevValue.current = value;
   };
 
   const onSubmit = async (event: React.KeyboardEvent<HTMLDivElement>) => {
@@ -229,7 +221,13 @@ export const Input = ({
       }
     }
 
-    if (key === 'ArrowRight' && suggestion) {
+    const _currentTextLength =
+      inputRef.current?.querySelector<HTMLSpanElement>('#input-value')
+        ?.textContent?.length ?? 0;
+
+    const _isAtEnd = getCaretPosition(inputRef.current) >= _currentTextLength;
+
+    if (key === 'ArrowRight' && suggestion && _isAtEnd) {
       prevValue.current = undefined;
       handleSetValue(value + suggestion);
       setLastSuggestionIndex(0);
@@ -271,6 +269,10 @@ export const Input = ({
     prevValue.current = text;
   };
 
+  const handlePaste = () => {
+    prevValue.current = undefined;
+  };
+
   const onFocus = () => {
     if (inputRef.current) setCaretToEnd(inputRef.current, undefined);
 
@@ -303,6 +305,7 @@ export const Input = ({
         onFocus={onFocus}
         onTouchStart={onFocus}
         onInput={handleChange}
+        onPaste={handlePaste}
         autoCorrect='off'
         autoCapitalize='off'
       ></div>

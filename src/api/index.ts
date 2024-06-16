@@ -14,33 +14,3 @@ export const getRepos = async (): Promise<Repo[]> => {
 
   return data;
 };
-
-export const getBio = async () => {
-  const { data } = await axios.get(config.bioUrl);
-
-  return data;
-};
-
-export const getExp = async () => {
-  const { data } = await axios.get(config.experience);
-
-  return data;
-};
-
-export const getResume = async () => {
-  const { data } = await axios.get(config.resume);
-
-  return data;
-};
-
-export const getPortfolio = async () => {
-  const { data } = await axios.get(config.portfolio);
-
-  return data;
-};
-
-export const getProjects = async () => {
-  const { data } = await axios.get(config.projects);
-
-  return data;
-};

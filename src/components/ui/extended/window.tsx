@@ -78,7 +78,7 @@ const WindowDisplay = ({
     >
       <div
         className={cn(
-          'hidden h-12 w-full items-center justify-between space-x-1.5 rounded-t-lg border-0 border-border/20 bg-gray-950 p-2 px-4 sm:flex sm:border-2',
+          'hidden h-12 w-full items-center justify-between space-x-1.5 rounded-t-lg border-0 border-border/20 bg-gray-950 p-2 px-4 sm:flex sm:border',
           { 'sm:rounded-lg': minify },
         )}
       >
@@ -130,7 +130,7 @@ const WindowDisplay = ({
       </div>
       <div
         className={cn(
-          'flex h-full min-w-full max-w-2xl flex-1 flex-col overflow-clip border-t-0 border-none border-border/20 sm:rounded-b-lg sm:border-2',
+          'flex h-full min-w-full max-w-2xl flex-1 flex-col overflow-clip border-t-0 border-border/20 sm:rounded-b-lg sm:border',
           { 'sm:hidden': minify },
         )}
         style={{

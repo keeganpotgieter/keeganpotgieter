@@ -150,7 +150,7 @@ const getInfo = () => {
     localStorage.getItem('visitedAt') || new Date().toString(),
   );
   const hostname = window.location.hostname;
-  const theme = localStorage.getItem('theme');
+  const theme = localStorage.getItem('theme') ?? 'default';
   const resolution = `${window.screen.availWidth}x${window.screen.availHeight}`;
   const packages = Object.keys(packageJson.dependencies);
   const devPackages = Object.keys(packageJson.devDependencies);
@@ -164,7 +164,7 @@ const getInfo = () => {
     packages.length + devPackages.length
   } (npm)\n`;
   message += `<span style="color: ${mainColor}">Resolution</span>: ${resolution}\n`;
-  message += `<span style="color: ${mainColor}">Shell</span>: TODO\n`;
+  // message += `<span style="color: ${mainColor}">Shell</span>: TODO\n`;
   message += `<span style="color: ${mainColor}">Theme</span>: ${theme}\n`;
   // message += `<span style="color: ${mainColor}">License</span>: ${packageJson.l}\n`;
   message += `<span style="color: ${mainColor}">Version</span>: ${packageJson.version}\n`;

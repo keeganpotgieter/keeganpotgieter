@@ -11,12 +11,14 @@ export const History: React.FC<Props> = ({ history }) => {
     <>
       {history.map((entry: HistoryInterface, index: number) => (
         <div key={entry.command + index}>
-          <div className='flex flex-row space-x-2'>
+          <div className='flex w-full max-w-full flex-row space-x-2'>
             <div className='float-left flex-shrink'>
               <Username />
             </div>
 
-            <div className='overflow-ellipsis'>{entry.command}</div>
+            <div className='w-full overflow-hidden overflow-ellipsis whitespace-nowrap'>
+              {entry.command}
+            </div>
           </div>
 
           <p
