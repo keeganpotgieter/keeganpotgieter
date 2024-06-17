@@ -12,7 +12,7 @@ interface Props {
 const Layout: React.FC<Props> = ({ children, onClick }) => {
   return (
     <div
-      className='relative flex h-dvh w-dvw items-center justify-center overflow-hidden overscroll-none bg-black text-xs md:text-base'
+      className='relative flex h-screen w-dvw items-center justify-center overflow-hidden overscroll-none bg-black text-xs md:text-base'
       onClick={onClick}
     >
       <EvervaultCard>

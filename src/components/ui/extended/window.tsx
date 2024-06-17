@@ -1,5 +1,5 @@
+import { useTheme } from '@/context/theme-provider';
 import { cn } from '@/lib/utils';
-import { useTheme } from '@/utils/themeProvider';
 import { PanelBottomOpenIcon } from 'lucide-react';
 import React from 'react';
 import { ReactNode } from 'react';

@@ -1,7 +1,9 @@
+import { isCommandHidden } from '../completion';
 import * as bin from './index';
 
 interface CommandCallback extends Function {
   description?: string;
+  hidden?: boolean;
 }
 
 const groupCommandsByDescription = () => {
@@ -16,6 +18,10 @@ const groupCommandsByDescription = () => {
     .sort()
     .forEach(([command, callback]) => {
       const description = callback.description || callback.name;
+
+      if (isCommandHidden(callback)) {
+        return;
+      }
 
       if (!grouped[description]) {
         grouped[description] = { aliases: [command], callback };

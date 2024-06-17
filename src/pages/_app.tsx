@@ -1,7 +1,7 @@
 import Layout from '../components/layout';
+import { ShellProvider } from '../context/shell-provider';
+import { ThemeProvider } from '../context/theme-provider';
 import '../styles/global.css';
-import { ShellProvider } from '../utils/shellProvider';
-import { ThemeProvider } from '../utils/themeProvider';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
 import React from 'react';

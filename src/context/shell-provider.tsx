@@ -1,6 +1,6 @@
 import { History } from '../interfaces/history';
-import * as bin from './bin';
-import { useTheme } from './themeProvider';
+import * as bin from '../utils/bin';
+import { useTheme } from './theme-provider';
 import React, { useEffect } from 'react';
 
 type BinType = typeof bin;

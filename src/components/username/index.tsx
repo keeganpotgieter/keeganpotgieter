@@ -1,4 +1,4 @@
-import { useTheme } from '../../utils/themeProvider';
+import { useTheme } from '../../context/theme-provider';
 import React, { useEffect, useState } from 'react';
 
 const Username = () => {

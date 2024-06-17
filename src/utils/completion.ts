@@ -4,12 +4,24 @@ import { findIndexStartsWithAlphabetical } from './bin/find-index';
 type BinType = typeof bin;
 type BinFunctionWithArguments = {
   _arguments?: any;
-  description: string;
+  [key: string]: unknown;
+  // description: string;
+  // hidden?: boolean;
+  (): Promise<string>;
+};
+
+type HiddenBinFunction = {
+  [key: string]: unknown;
+  hidden?: boolean;
   (): Promise<string>;
 };
 
 const hasArguments = (fn: any): fn is BinFunctionWithArguments => {
   return '_arguments' in fn;
+};
+
+export const isCommandHidden = (fn: any): fn is HiddenBinFunction => {
+  return 'hidden' in fn;
 };
 
 const commandCache: { [key: string]: string[] } = {};
@@ -36,8 +48,10 @@ export const getCommandCompletion = (command: string): string | undefined => {
     return commands[0];
   }
 
-  const commands = Object.keys(bin).filter((entry) =>
-    entry.startsWith(command),
+  const commands = Object.keys(bin).filter(
+    (entry) =>
+      entry.startsWith(command) &&
+      !isCommandHidden(bin[entry as keyof BinType]),
   );
 
   commandCache[command] = commands;
@@ -84,6 +98,10 @@ export const handleAutocomplete = async (
 
   if (!binFunction) {
     return undefined;
+  }
+
+  if (isCommandHidden(binFunction)) {
+    return;
   }
 
   const cmdArguments = hasArguments(binFunction) ? binFunction._arguments : {};
@@ -140,4 +158,3 @@ export const handleAutocomplete = async (
     ? cmd + ' ' + args.join(' ') + nextArg.substring(args[index]?.length ?? 0)
     : cmd + ' ' + args.join(' ');
 };
-//

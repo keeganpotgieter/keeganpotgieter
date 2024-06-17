@@ -1,7 +1,7 @@
 import config from '../../config.json';
 import { History } from '../components/history';
 import { Input } from '../components/input';
-import { useShell } from '../utils/shellProvider';
+import { useShell } from '../context/shell-provider';
 import Head from 'next/head';
 import React from 'react';
 
@@ -23,14 +23,13 @@ const IndexPage: React.FC<IndexPageProps> = ({ inputRef }) => {
   return (
     <>
       <Head>
-        <title>Keegan Potgieter | Home</title>
+        <title>Keegan Potgieter</title>
       </Head>
 
       <div
         className='h-full w-full overflow-hidden rounded-lg'
         style={{
           padding: config.border ? 16 : 8,
-          // borderWidth: config.border ? 2 : 0,
         }}
       >
         <div ref={containerRef} className='h-full w-full overflow-y-auto'>

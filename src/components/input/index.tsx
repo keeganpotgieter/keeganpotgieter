@@ -1,10 +1,10 @@
-import { commandExists } from '../../utils/commandExists';
-import { normaliseString, useShell } from '../../utils/shellProvider';
+import { normaliseString, useShell } from '../../context/shell-provider';
+import { useTheme } from '../../context/theme-provider';
+import { commandExists } from '../../utils/command-exists';
 import {
   getCommandSuggestion,
   handleTabCompletion,
-} from '../../utils/tabCompletion';
-import { useTheme } from '../../utils/themeProvider';
+} from '../../utils/completion';
 import Username from '../username';
 import React from 'react';
 
