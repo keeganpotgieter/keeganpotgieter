@@ -3,6 +3,7 @@ import { html } from '@/lib/utils';
 const content = html``;
 
 export const projects = async (): Promise<string> => {
+  // TODO
   return content;
 };
 export const p = projects;

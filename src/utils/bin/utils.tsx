@@ -38,20 +38,23 @@ const formatCommandDescription = (
   command: string,
   aliases: string[],
   callback: CommandCallback,
-): string => {
+) => {
   const aliasList = aliases.map((alias) => `'${alias}'`).join(' / ');
   const args = callback.length > 0 ? '[args]' : '';
   const description = callback.description || 'No description available';
-  return `<tr>
-      <td>${command}</td>
-      <td>${aliasList}</td>
-      <td class="max-sm:hidden">${args}</td>
-      <td class="text-right">${description}</td>
-    </tr>`;
+  return (
+    <tr>
+      <td>{command}</td>
+      <td>{aliasList}</td>
+      <td className='max-sm:hidden'>{args}</td>
+      <td className='text-right'>{description}</td>
+    </tr>
+  );
 };
 
-export const help = async (): Promise<string> => {
+export const help = async () => {
   const groupedCommands = groupCommandsByDescription();
+
   const commandDescriptions = Object.entries(groupedCommands).map(
     ([_, { aliases, callback }]) => {
       const command = aliases.pop() as string;
@@ -59,28 +62,31 @@ export const help = async (): Promise<string> => {
     },
   );
 
-  const output = `<table class="w-full">
-    <thead class="text-left px-2">
-      <tr>
-        <th>Command</th>
-        <th>Aliases</th>
-        <th class="max-sm:hidden">Args</th>
-        <th class="text-right">Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      ${commandDescriptions.join('')}
-    </tbody>
-  </table>
-  <p class="hidden sm:block">
-[tab] trigger completion.<br/>
-[ctrl+l] clear terminal.<br/>
-  </p>
-  <p class="block sm:hidden">
-[touch] trigger completion.<br/>
-  </p>`;
-
-  return output;
+  return (
+    <div className='flex flex-col gap-4'>
+      <table className='w-full'>
+        <thead className='px-2 text-left'>
+          <tr>
+            <th>Command</th>
+            <th>Aliases</th>
+            <th className='max-sm:hidden'>Args</th>
+            <th className='text-right'>Description</th>
+          </tr>
+        </thead>
+        <tbody>{commandDescriptions}</tbody>
+      </table>
+      <p className='hidden sm:block'>
+        [tab] trigger completion.
+        <br />
+        [ctrl+l] clear terminal.
+        <br />
+      </p>
+      <p className='block sm:hidden'>
+        [touch] trigger completion.
+        <br />
+      </p>
+    </div>
+  );
 };
 export const h = help;
 
@@ -123,23 +129,25 @@ export const sudo = async (args?: string[]): Promise<string> => {
 
 sudo.description = 'Sudo';
 
-export const banner = (): string => {
-  return `<h2 class="text-xl p-0">Welcome!</h2>
+export const banner = () => {
+  return (
+    <div className='flex flex-col gap-4'>
+      <h2 className='p-0 text-xl'>Welcome!</h2>
+      <div className='flex flex-col gap-2'>
+        <h3>Example Commands:</h3>
+        <span>- Resume: 'resume' or 'r' </span>
+        <span> - Github: 'github' </span>
 
-Example Commands:
-  - Resume: 'resume' or 'r'
-  - Github: 'github'
-
-Contacts:
-  - Email me: 'email'
-  - LinkedIn: 'linkedin'
-
-<p>Type 'help' to see a list of available commands.</p>
-
-<div class='block sm:hidden border border-border/50 bg-border/10 rounded-md px-[2px] py-[1.5px] h-fit w-fit whitespace-normal bg-[conic-gradient(hsl(var(--secondary))_60deg,#22c55e_140deg,hsl(var(--primary))_200deg,hsl(var(--secondary))_340deg)]'>
-For more fun, visit on a bigger device!
-</div>
-`;
+        <h3>Contacts:</h3>
+        <span>- Email me: 'email'</span>
+        <span>- LinkedIn: 'linkedin'</span>
+      </div>
+      <p>Type 'help' to see a list of available commands.</p>
+      <div className='block h-fit w-fit whitespace-normal rounded-md border border-border/50 bg-border/10 bg-[conic-gradient(hsl(var(--secondary))_60deg,#22c55e_140deg,hsl(var(--primary))_200deg,hsl(var(--secondary))_340deg)] px-[2px] py-[1.5px] sm:hidden'>
+        For more fun, visit on a bigger device!
+      </div>
+    </div>
+  );
 };
 
 banner.description = 'Display the welcome banner';

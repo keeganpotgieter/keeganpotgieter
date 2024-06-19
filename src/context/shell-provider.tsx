@@ -75,7 +75,7 @@ export const ShellProvider: React.FC<ShellProviderProps> = ({ children }) => {
     }
   }, [command, init]);
 
-  const handleSetHistory = (output: string) => {
+  const handleSetHistory = (output: React.ReactNode) => {
     setHistory([
       ...history,
       {
@@ -117,6 +117,10 @@ export const ShellProvider: React.FC<ShellProviderProps> = ({ children }) => {
         break;
       case '':
         handleSetHistory('');
+        break;
+      case 'im_a_nerd':
+        const result = bin.im_a_nerd(history);
+        handleSetHistory(result || '');
         break;
       default: {
         handleCommand(cmd, args, handleSetHistory);

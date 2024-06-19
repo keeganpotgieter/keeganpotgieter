@@ -121,8 +121,10 @@ export const Input = ({
   const updateContent = (val: string, sugg: string) => {
     if (inputRef.current) {
       inputRef.current.innerHTML = `
-        <span id="input-value">${val}</span><span id="input-suggestion" style="opacity: 0.2">${sugg}</span>
-      `;
+        <span id="input-value"></span><span id="input-suggestion" style="opacity: 0.5">${sugg}</span>`;
+
+      const inputSpan = inputRef.current.querySelector('#input-value');
+      if (inputSpan) inputSpan.textContent = val;
       setCaretToEnd(inputRef.current, prevValue.current);
     }
   };
@@ -308,7 +310,7 @@ export const Input = ({
         onPaste={handlePaste}
         autoCorrect='off'
         autoCapitalize='off'
-      ></div>
+      />
     </div>
   );
 };

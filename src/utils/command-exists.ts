@@ -1,10 +1,6 @@
 import * as bin from './bin';
 
-const commandCache: { [key: string]: boolean } = {
-  // cd: true,
-  // ls: true,
-  // 'ls -a': true,
-};
+const commandCache: { [key: string]: boolean } = {};
 
 export const commandExists = (command: string) => {
   if (commandCache[command]) {
