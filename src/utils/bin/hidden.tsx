@@ -9,7 +9,9 @@ export const ls = (args?: string[]) => {
   return (
     <div className='flex flex-col gap-4 whitespace-normal'>
       <span className='gradient-text text-xs'>
-        a hidden command... nerd points +1
+        {hasHiddenFlag
+          ? 'wow, a really hidden command... nerd points +10'
+          : 'a hidden command... nerd points +1'}
       </span>
       <div className='flex flex-row gap-6'>
         <div>linkedin</div>
@@ -26,9 +28,11 @@ ls.description = '';
 ls.hidden = true;
 
 const HiddenFileComponent = () => {
+  console.log('Youre getting closer... nerd points +30');
   return (
-    <div>
-      Well done... try looking a little deeper...
+    <div className='flex flex-col'>
+      <span className='gradient-text text-xs'>nice... nerd points +20</span>
+      <span>Well done... try looking a little deeper...</span>
       <EasterEgg />
     </div>
   );
@@ -70,14 +74,22 @@ export const cd = (args: string[]) => {
 
 cd.description = '';
 cd.hidden = true;
+cd._arguments = {
+  linkedin: null,
+  keeganpotgieter: null,
+  projects: null,
+  resume: null,
+};
 
 export const im_a_nerd = (history: History[]) => {
-  // TODO
-  console.log(history);
   if (history.find((h) => h.command === 'cd .youre_a_nerd_i_see')) {
-    return 'youre_a_nerd_i_see';
+    return (
+      <span className='gradient-text text-xs'>
+        wow! nice! nerd points +100!!!
+      </span>
+    );
   }
-  return 'hahahahah';
+  return 'how did even find this';
 };
 
 im_a_nerd.description = '';

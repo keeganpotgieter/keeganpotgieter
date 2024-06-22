@@ -1,10 +1,5 @@
-import { html } from '@/lib/utils';
-
-const content = html``;
-
 export const projects = async (): Promise<string> => {
-  // TODO
-  return content;
+  return 'Projects coming soon...';
 };
 export const p = projects;
 

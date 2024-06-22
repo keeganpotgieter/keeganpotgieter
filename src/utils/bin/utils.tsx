@@ -1,5 +1,6 @@
 import { isCommandHidden } from '../completion';
 import * as bin from './index';
+import BorderAnimate from '@/components/ui/extended/border-animate';
 
 interface CommandCallback extends Function {
   description?: string;
@@ -131,22 +132,44 @@ sudo.description = 'Sudo';
 
 export const banner = () => {
   return (
-    <div className='flex flex-col gap-4'>
-      <h2 className='p-0 text-xl'>Welcome!</h2>
-      <div className='flex flex-col gap-2'>
-        <h3>Example Commands:</h3>
+    <BorderAnimate>
+      <h2 className='p-0 text-xl'>Welcome! I'm Keegan 👋</h2>
+      <span className='text-sm text-border/75'>
+        I'm a software enginner currently focused on full-stack development.
+      </span>
+      <div className='mt-4 flex flex-col text-sm'>
+        <h3 className='text-base'>Example Commands:</h3>
         <span>- Resume: 'resume' or 'r' </span>
-        <span> - Github: 'github' </span>
+        <span>- Github: 'github' </span>
 
-        <h3>Contacts:</h3>
+        <h3 className='mt-2 text-base'>Contacts:</h3>
         <span>- Email me: 'email'</span>
         <span>- LinkedIn: 'linkedin'</span>
       </div>
-      <p>Type 'help' to see a list of available commands.</p>
-      <div className='block h-fit w-fit whitespace-normal rounded-md border border-border/50 bg-border/10 bg-[conic-gradient(hsl(var(--secondary))_60deg,#22c55e_140deg,hsl(var(--primary))_200deg,hsl(var(--secondary))_340deg)] px-[2px] py-[1.5px] sm:hidden'>
+      <br></br>
+      <p className='text-xs'>
+        Type 'help' to see a list of available commands.
+      </p>
+      <div className='mt-2 block h-fit w-fit whitespace-normal rounded-md border border-border/50 bg-border/10 bg-[conic-gradient(hsl(var(--secondary))_60deg,#22c55e_140deg,hsl(var(--primary))_200deg,hsl(var(--secondary))_340deg)] px-[2px] py-[1.5px] sm:hidden'>
         For more fun, visit on a bigger device!
       </div>
-    </div>
+    </BorderAnimate>
+    // <div className='flex flex-col gap-4'>
+    //   <h2 className='p-0 text-xl'>Welcome!</h2>
+    //   <div className='flex flex-col gap-2'>
+    //     <h3>Example Commands:</h3>
+    //     <span>- Resume: 'resume' or 'r' </span>
+    //     <span> - Github: 'github' </span>
+
+    //     <h3>Contacts:</h3>
+    //     <span>- Email me: 'email'</span>
+    //     <span>- LinkedIn: 'linkedin'</span>
+    //   </div>
+    //   <p>Type 'help' to see a list of available commands.</p>
+    //   <div className='block h-fit w-fit whitespace-normal rounded-md border border-border/50 bg-border/10 bg-[conic-gradient(hsl(var(--secondary))_60deg,#22c55e_140deg,hsl(var(--primary))_200deg,hsl(var(--secondary))_340deg)] px-[2px] py-[1.5px] sm:hidden'>
+    //     For more fun, visit on a bigger device!
+    //   </div>
+    // </div>
   );
 };
 

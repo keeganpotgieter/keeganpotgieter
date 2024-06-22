@@ -1,4 +1,5 @@
 export * from './about';
+export * from './education';
 export * from './exp';
 export * from './repos';
 // export * from './projects';
