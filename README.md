@@ -16,6 +16,7 @@
 
 ## 🛠 Technologies
 
+<div style="display: flex; flex-direction: row;">
 <img src="https://img.shields.io/badge/JavaScript-282C34?logo=javascript&logoColor=F7DF1E" alt="JavaScript logo" title="JavaScript" height="20" />
 &nbsp;
 <img src="https://img.shields.io/badge/React-282C34?logo=React" alt="JavaScript logo" title="React" height="20" />
@@ -39,3 +40,4 @@
 <img src="https://img.shields.io/badge/Node.js-282C34?logo=node.js&logoColor=339933" alt="Node.js logo" title="Node.js" height="20" />
 &nbsp;
 <img src="https://img.shields.io/badge/Python-282C34?logo=python" alt="Python" title="Python" height="20" />
+</div>
