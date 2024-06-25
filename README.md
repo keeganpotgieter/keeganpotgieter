@@ -11,7 +11,7 @@
 </a>
 
 <a href="https://necta.app" target="_blank">
-    <img draggable="false" alt="necta" width="15%" src="assets/venus.webp" style="transform: rotate(180deg);"></img>
+    <img draggable="false" alt="necta" width="15%" src="assets/jupiter.gif"></img>
 </a>
 
 ## 🛠 Technologies
